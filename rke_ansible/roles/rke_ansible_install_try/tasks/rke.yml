@@ -33,11 +33,3 @@
     mode: u=rw,g=r,o=
   tags:
     - rke
-
-- name: Copy file with owner and permission, using symbolic representation
-  copy:
-    src: /etc/rke/cluster.yml
-    dest: /etc/rke/cluster.yml
-    owner: ansible
-    group: ansible
-    mode: 0644
