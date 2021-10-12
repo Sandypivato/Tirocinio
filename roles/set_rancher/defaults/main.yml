@@ -1,0 +1,6 @@
+---
+server_name: myrancherserver
+ports: 
+        - 80:80
+        - 443:443
+version: v2.5.9

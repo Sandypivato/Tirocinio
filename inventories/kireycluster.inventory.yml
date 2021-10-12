@@ -1,0 +1,6 @@
+[server]
+kube-node-1.kg.kireygroup.com
+
+[worker]
+kube-node-2.kg.kireygroup.com
+kube-node-3.kg.kireygroup.com

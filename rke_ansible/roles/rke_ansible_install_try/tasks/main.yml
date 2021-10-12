@@ -1,0 +1,3 @@
+---
+- name: Run RKE installer
+  include_tasks: rke.yml

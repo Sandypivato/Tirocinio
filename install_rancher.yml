@@ -1,0 +1,6 @@
+- name: Setting up Rancher Server
+  hosts: all
+  become: true
+  gather_facts: no
+  roles:
+    - { role: set_rancher, tags: ["rancher"] }

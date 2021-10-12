@@ -1,0 +1,43 @@
+---
+- name: Include environment variables file  
+  include_vars:    
+    file: "{{ playbook_dir }}/roles/rke_ansible_install_try/vars/{{ site_environment }}.vars.yml"
+
+- name: Install rke binary
+  get_url:
+    url: "{{ rke_binary_download }}"
+    checksum: "{{ rke_binary_checksum }}"
+    dest: /usr/bin/rke
+    owner: root
+    group: root
+    mode: u=rwx,g=rx,o=rx
+  tags:
+    - rke
+
+- name: Create config directory
+  file:
+    path: "{{ rke_config_dir }}"
+    state: directory
+    owner: root
+    group: root
+  tags:
+    - rke
+
+- name: Write cluster config
+  register: rke_config_file
+  template:
+    src: config.j2
+    dest: "{{ rke_config_dir }}/cluster.yml"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=
+  tags:
+    - rke
+
+- name: Copy file with owner and permission, using symbolic representation
+  copy:
+    src: /etc/rke/cluster.yml
+    dest: /etc/rke/cluster.yml
+    owner: ansible
+    group: ansible
+    mode: 0644

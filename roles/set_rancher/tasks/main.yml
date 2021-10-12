@@ -1,0 +1,4 @@
+---
+- name: Pull and run the Rancher/server container
+  shell: "docker run -d --restart=unless-stopped  -p {{ ports[0] }} -p {{ ports[1] }} --privileged rancher/rancher:{{ version }}"
+

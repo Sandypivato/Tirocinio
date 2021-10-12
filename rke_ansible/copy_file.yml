@@ -1,0 +1,12 @@
+- name: Copy file with owner and permission, using symbolic representation
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: copy file
+      become: true
+      copy:
+        src: /etc/rke/cluster.yml
+        dest: /etc/rke/cluster.yml
+        owner: ansible
+        group: ansible
+        mode: 0644

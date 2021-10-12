@@ -1,0 +1,81 @@
+---
+
+rke_binary_version: 1.2.8
+
+
+rke_binary_download: https://github.com/rancher/rke/releases/download/v{{ rke_binary_version }}/rke_linux-amd64
+
+
+rke_binary_checksum: sha256:b2f45abe7bab2f78d11ef38d3957636f7799bcd79d476a8620f9c220477c8365
+
+rke_kubernetes_version: v1.20.6-rancher1-1
+
+rke_kubernetes_support:
+  "1.17": v1.17.17-rancher2-1
+  "1.18": v1.18.18-rancher1-1
+  "1.19": v1.19.10-rancher1-1
+  "1.20": v1.20.6-rancher1-1
+
+rke_config_dir: /etc/rke
+
+rke_external_domain:
+
+rke_cluster_name: RKE_TRY
+
+rke_auth_strategy: x509
+
+
+rke_auth_sans: []
+
+rke_auth_mode: rbac
+
+
+rke_nodes_config: 
+  
+rke_network_plugin: canal
+
+rke_network_options:
+
+rke_network_password: 
+
+rke_backup_enabled: False
+
+rke_controller_config:
+
+rke_kubelet_config:
+
+rke_kubeproxy_config:
+
+rke_scheduler_config:
+
+rke_dns_config:
+
+
+rke_ingress_config:
+  provider: nginx
+
+rke_addon_default:
+     - url: https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
+
+rke_addon_extra:
+     - url: https://gist.githubusercontent.com/superseb/499f2caa2637c404af41cfb7e5f4a938/raw/930841ac00653fdff8beca61dab9a20bb8983782/k8s-dashboard-user.yml
+
+rke_registries_config:
+
+
+rke_images_config:
+
+rke_provider_config:
+
+
+rke_copy_kubeconfig: []
+
+rke_config_owner: root
+
+rke_config_group: root
+
+rke_config_mode: u=rw,g=r,o=
+
+
+rke_force_update: False
+

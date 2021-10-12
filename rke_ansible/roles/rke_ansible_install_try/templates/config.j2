@@ -1,0 +1,50 @@
+---
+cluster_name: "{{ rke_cluster_name }}"
+
+kubernetes_version: "{{ rke_kubernetes_version }}"
+
+nodes:
+{% for node in groups['server'] %}
+    - hostname_override: {{ node }}
+      address: {{ hostvars[node].ansible_host }}
+      user: ansible
+      role:
+        - controlplane 
+        - etcd
+      ssh_key_path: /home/ansible/.ssh/id_rsa
+      docker_socket: /var/run/docker.sock 
+{% endfor %}
+{% for node in groups['worker'] %}
+    - hostname_override: {{ node }}
+      address: {{ hostvars[node].ansible_host }}
+      user: ansible
+      role:
+        - worker
+      ssh_key_path: /home/ansible/.ssh/id_rsa
+      docker_socket: /var/run/docker.sock
+{% endfor %}
+network:
+  plugin: {{ rke_network_plugin }}
+{% if rke_network_options | default(False) %}
+  options:
+    {{ rke_network_options | to_nice_yaml(indent=2) | indent(width=4) | trim }}
+{% endif %}
+{% if rke_network_plugin == 'weave' %}
+  weave_network_provider:
+    password: {{ rke_network_password }}
+{% endif %}
+
+ingress:
+  provider: nginx
+
+addons_include:
+{% for addon in rke_addon_default + rke_addon_extra %}
+{%- if addon.url | default(False) %}
+  - {{ addon.url }}
+{% else %}
+{%- if addon.state | default('present') == 'present' %}
+  - /etc/rke/addons/{{ addon.name }}.yml
+{% endif -%}
+{% endif -%}
+{% endfor %}
+
